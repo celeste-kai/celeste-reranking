@@ -13,6 +13,7 @@ dependencies = [
 dev = [
     "pre-commit>=4.2.0",
     "notebook>=7.4.4",
+    "streamlit>=1.28.0",
 ]
 
 [tool.uv.sources]
