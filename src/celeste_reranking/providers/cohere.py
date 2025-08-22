@@ -10,12 +10,10 @@ from celeste_core.config.settings import settings
 class CohereReranker(BaseReranker):
     """Reranker using Cohere's API."""
 
-    def __init__(
-        self, model: str = "rerank-multilingual-v3.0", **kwargs: Any
-    ) -> None:
+    def __init__(self, model: str = "rerank-v3.5", **kwargs: Any) -> None:
         """
         Initialize Cohere reranker.
-        
+
         Args:
             model: Cohere rerank model to use
             **kwargs: Additional arguments passed to Cohere client
@@ -33,13 +31,13 @@ class CohereReranker(BaseReranker):
     ) -> AIResponse[List[str]]:
         """
         Rerank texts using Cohere API.
-        
+
         Args:
             query: Search query
             texts: Text(s) to rerank
             top_k: Maximum number of results to return
             **kwargs: Additional arguments passed to Cohere rerank API
-            
+
         Returns:
             AIResponse with reranked texts as content and scores in metadata
         """
