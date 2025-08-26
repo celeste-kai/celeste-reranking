@@ -6,7 +6,7 @@ from celeste_core.enums.capability import Capability
 from celeste_reranking import create_reranker
 
 
-async def main():
+async def main() -> None:
     st.set_page_config(page_title="Celeste Reranking", page_icon="🎯", layout="wide")
     st.title("🎯 Celeste Reranking")
 
@@ -29,7 +29,7 @@ async def main():
             "Model:", range(len(models)), format_func=lambda i: model_names[i]
         )
         model = models[selected_idx].id
-        
+
         st.subheader("Options")
         top_k = st.slider("Top K results", 1, 10, 3)
 
@@ -63,13 +63,13 @@ Running and swimming are excellent forms of cardio exercise."""
         if not query.strip():
             st.error("Please enter a query.")
             return
-        
+
         if not texts_input.strip():
             st.error("Please enter texts to rerank.")
             return
 
-        texts = [line.strip() for line in texts_input.split('\n') if line.strip()]
-        
+        texts = [line.strip() for line in texts_input.split("\n") if line.strip()]
+
         if len(texts) < 2:
             st.error("Please enter at least 2 texts to rerank.")
             return
@@ -78,26 +78,28 @@ Running and swimming are excellent forms of cardio exercise."""
 
         with st.spinner("Reranking..."):
             response = await reranker.rerank(query, texts, top_k=top_k)
-            
+
             st.subheader("🏆 Reranked Results")
-            
+
             reranked_texts = response.content
             scores = response.metadata.get("scores", [])
             original_indices = response.metadata.get("original_indices", [])
-            
-            for i, (text, score, orig_idx) in enumerate(zip(reranked_texts, scores, original_indices)):
+
+            for i, (text, score, orig_idx) in enumerate(
+                zip(reranked_texts, scores, original_indices, strict=False)
+            ):
                 with st.container():
                     col1, col2, col3 = st.columns([0.8, 0.1, 0.1])
-                    
+
                     with col1:
                         st.markdown(f"**{i+1}.** {text}")
-                    
+
                     with col2:
                         st.metric("Score", f"{score:.3f}")
-                    
+
                     with col3:
                         st.metric("Original #", orig_idx + 1)
-                    
+
                     st.divider()
 
             # Show metadata
