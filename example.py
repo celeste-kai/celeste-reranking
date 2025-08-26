@@ -92,7 +92,7 @@ Running and swimming are excellent forms of cardio exercise."""
                     col1, col2, col3 = st.columns([0.8, 0.1, 0.1])
 
                     with col1:
-                        st.markdown(f"**{i+1}.** {text}")
+                        st.markdown(f"**{i + 1}.** {text}")
 
                     with col2:
                         st.metric("Score", f"{score:.3f}")
