@@ -103,14 +103,13 @@ Running and swimming are excellent forms of cardio exercise."""
                     st.divider()
 
             # Show metadata
-            with st.expander("📊 Response Details", expanded=False):
-                metadata_dict = {
-                    "provider": response.provider.value if response.provider else None,
-                    "model": model,
-                    "total_results": len(reranked_texts),
-                    "metadata": response.metadata,
-                }
-                st.json(metadata_dict)
+            with st.expander("📊 Details", expanded=False):
+                st.write(f"**Provider:** {provider}")
+                st.write(f"**Model:** {model}")
+                st.write(f"**Total Results:** {len(reranked_texts)}")
+                st.write(f"**Query:** {query}")
+                if response.metadata:
+                    st.json(response.metadata)
 
     st.markdown("---")
     st.caption("Built with Streamlit • Powered by Celeste")
