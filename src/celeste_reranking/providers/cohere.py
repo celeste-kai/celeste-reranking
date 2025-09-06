@@ -1,4 +1,4 @@
-from typing import Any, List, Union
+from typing import Any
 
 import cohere
 import httpx
@@ -21,14 +21,10 @@ class CohereReranker(BaseReranker):
         # Create httpx client with proper SSL verification
         httpx_client = httpx.Client()
 
-        self.client = cohere.ClientV2(
-            api_key=settings.cohere.api_key, httpx_client=httpx_client, **kwargs
-        )
+        self.client = cohere.ClientV2(api_key=settings.cohere.api_key, httpx_client=httpx_client, **kwargs)
         self.model = model
 
-    async def rerank(
-        self, query: str, texts: Union[str, List[str]], top_k: int = 5, **kwargs: Any
-    ) -> AIResponse[List[str]]:
+    async def rerank(self, query: str, texts: str | list[str], top_k: int = 5, **kwargs: Any) -> AIResponse[list[str]]:
         """
         Rerank texts using Cohere API.
 
