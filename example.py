@@ -3,6 +3,7 @@ import asyncio
 import streamlit as st
 from celeste_core import Provider, list_models
 from celeste_core.enums.capability import Capability
+
 from celeste_reranking import create_reranker
 
 
@@ -18,16 +19,10 @@ async def main() -> None:
 
     with st.sidebar:
         st.header("⚙️ Configuration")
-        provider = st.selectbox(
-            "Provider:", [p.value for p in providers], format_func=str.title
-        )
-        models = list_models(
-            provider=Provider(provider), capability=Capability.RERANKING
-        )
+        provider = st.selectbox("Provider:", [p.value for p in providers], format_func=str.title)
+        models = list_models(provider=Provider(provider), capability=Capability.RERANKING)
         model_names = [m.display_name or m.id for m in models]
-        selected_idx = st.selectbox(
-            "Model:", range(len(models)), format_func=lambda i: model_names[i]
-        )
+        selected_idx = st.selectbox("Model:", range(len(models)), format_func=lambda i: model_names[i])
         model = models[selected_idx].id
 
         st.subheader("Options")
@@ -85,9 +80,7 @@ Running and swimming are excellent forms of cardio exercise."""
             scores = response.metadata.get("scores", [])
             original_indices = response.metadata.get("original_indices", [])
 
-            for i, (text, score, orig_idx) in enumerate(
-                zip(reranked_texts, scores, original_indices, strict=False)
-            ):
+            for i, (text, score, orig_idx) in enumerate(zip(reranked_texts, scores, original_indices, strict=False)):
                 with st.container():
                     col1, col2, col3 = st.columns([0.8, 0.1, 0.1])
 

@@ -3,7 +3,7 @@ Celeste Reranking - Unified reranking interface for multiple providers.
 """
 
 from importlib import import_module
-from typing import Any, Union
+from typing import Any
 
 from celeste_core import Provider
 from celeste_core.base.reranker import BaseReranker
@@ -14,7 +14,7 @@ from .mapping import PROVIDER_MAPPING
 __version__ = "0.1.0"
 
 
-def create_reranker(provider: Union[Provider, str], **kwargs: Any) -> BaseReranker:
+def create_reranker(provider: Provider | str, **kwargs: Any) -> BaseReranker:
     """
     Create a reranker instance for the specified provider.
 
